@@ -13,8 +13,6 @@ var cp = require('child_process');
 var rv = require('./request_validator.node.js');
 
 
-
-
 var jobs = function() {
 	this.job_stack = [];
 	this.get_s = function() {
