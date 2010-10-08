@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<style>
+			body {
+				margin:0;
+				padding:0;
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/fonts/fonts-min.css" />
+		<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.8.1/build/datatable/assets/skins/sam/datatable.css" />
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/yahoo-dom-event/yahoo-dom-event.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/dragdrop/dragdrop-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/element/element-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/datasource/datasource-min.js"></script>
+		<script type="text/javascript" src="http://yui.yahooapis.com/2.8.1/build/datatable/datatable-min.js"></script>
+	</head>
+  	<body class="yui3-skin-sam  yui-skin-sam">
+		<div id="basic"></div>
+	</body>
+	<script type="text/javascript" src="/static/data.js"></script>
+	<script type="text/javascript">
+		YAHOO.util.Event.addListener(window, "load", function() {
+    		YAHOO.example.Basic = function() {
+        		var myColumnDefs = [
+            		{key:"id", sortable:true, resizeable:true},
+            		{key:"date", formatter:YAHOO.widget.DataTable.formatDate, sortable:true, sortOptions:{defaultDir:YAHOO.widget.DataTable.CLASS_DESC},resizeable:true},
+            		{key:"quantity", formatter:YAHOO.widget.DataTable.formatNumber, sortable:true, resizeable:true},
+            		{key:"amount", formatter:YAHOO.widget.DataTable.formatCurrency, sortable:true, resizeable:true},
+            		{key:"title", sortable:true, resizeable:true}
+        		];
+        		var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data.bookorders);
+        		myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
+        		myDataSource.responseSchema = {
+            		fields: ["id","date","quantity","amount","title"]
+        		};
+
+        		var myDataTable = new YAHOO.widget.DataTable("basic", myColumnDefs, myDataSource, {caption:"DataTable Caption"});
+                
+        return {
+            oDS: myDataSource,
+            oDT: myDataTable
+        };
+    }();
+});
+</script>
+
+</html>
