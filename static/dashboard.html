@@ -1,55 +1,68 @@
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="/static/dojo-release-1.5.0/dijit/themes/claro/claro.css"/>
-        <style type="text/css">
-            body, html { font-family:helvetica,arial,sans-serif; font-size:90%; }
-        </style>
-        <style type="text/css">
-            html, body { width: 100%; height: 100%; margin: 0; }
-        </style>
+    <style type="text/css">
+    	html, body, #mainDiv {
+    		width: 100%; height: 100%;
+    		border: 0; padding: 0; margin: 0;
+ 			}
+    </style>
+		<link rel="stylesheet" type="text/css" href="/static/dashboard.css"/>
 	</head>
-  	<body class=" claro ">
-        <div dojoType="dijit.layout.BorderContainer" style="width: 100%; height: 100%;">
-            <div dojoType="dijit.layout.ContentPane" region="top">
-                Top pane
-            </div>
-            <div dojoType="dijit.layout.AccordionContainer" region="leading">
-                <div dojoType="dijit.layout.AccordionPane" title="pane #1">
-                    accordion pane #1
-                </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #2">
-                    accordion pane #2
-                </div>
-                <div dojoType="dijit.layout.AccordionPane" title="pane #3">
-                    accordion pane #3
-                </div>
-            </div>
-            <div dojoType="dijit.layout.TabContainer" region="center">
-                <div dojoType="dijit.layout.ContentPane" title="tab #1">
-                    tab pane #1
-                </div>
-                <div dojoType="dijit.layout.ContentPane" title="tab #2">
-                    tab pane #2
-                </div>
-                <div dojoType="dijit.layout.ContentPane" title="tab #3">
-                    tab pane #3
-                </div>
-            </div>
-            <div dojoType="dijit.layout.ContentPane" region="trailing">
-                Trailing pane
-            </div>
-            <div dojoType="dijit.layout.ContentPane" region="bottom">
-                Bottom pane
-            </div>
-        </div>
-    </body>
-	
-	<script type="text/javascript" src="/static/dojo-release-1.5.0/dojo/dojo.js" djConfig="parseOnLoad: true">
-    </script>
-    <script type="text/javascript">
-        dojo.require("dijit.layout.BorderContainer");
-        dojo.require("dijit.layout.TabContainer");
-        dojo.require("dijit.layout.AccordionContainer");
-        dojo.require("dijit.layout.ContentPane");
-    </script>
+  <body class=" claro ">
+  	
+	<div dojoType="dojo.data.ItemFileWriteStore" jsId="mailStore" url="/static/init_que.json"></div>
+
+	<div dojoType="dijit.layout.LayoutContainer" id="mainDiv">
+    <div dojoType="dijit.Toolbar" layoutAlign="top">
+			<div id="getMail" dojoType="dijit.form.ComboButton"
+				iconClass="mailIconGetMail" optionsTitle="Mail Source Options">
+				<script type="dojo/method" event="onClick">
+					fakeDownload();
+				</script>
+				<span>Get Ques</span>
+				<ul dojoType="dijit.Menu">
+					<li dojoType="dijit.MenuItem" iconClass="mailIconGetMail">AAAAA</li>
+					<li dojoType="dijit.MenuItem" iconClass="mailIconGetMail">BBB</li>
+				</ul>
+			</div>
+			<span dojoType="dijit.Tooltip" connectId="getMail">Click to check ques.</span>
+
+		</div>
+    <div dojoType="dijit.layout.SplitContainer" orientation="horizontal" layoutAlign="client">
+    <div dojoType="dijit.layout.SplitContainer" orientation="horizontal">
+	  <div dojoType="dijit.layout.SplitContainer" orientation="horizontal">
+	    <div dojoType="dijit.layout.AccordionContainer">
+	    	<div dojoType="dijit.layout.AccordionPane" title="Jobs">
+	      	<table dojoType="dojox.grid.DataGrid"	region="top" minSize="20" splitter="true" jsId="table" id="table" store="mailStore" query="{ type: 'message' }" onRowClick="onJobQueClick" style="height: 150px;">
+						<thead>
+							<tr>
+								<th field="sender" width="10%">Creator</th>
+								<th field="label" width="20%">Description</th>
+								<th field="sent" width="10%" formatter="formatDate">Time</th>
+							</tr>
+						</thead>
+					</table> 
+	      </div>
+	      <div dojoType="dijit.layout.AccordionPane" title="News">
+	      	<div id="news_content" dojoType="dijit.layout.ContentPane" region="center" role="region" aria-live="assertive" aria-atomic="true" minSize="20"></div>
+	      </div>
+	      <div dojoType="dijit.layout.AccordionPane" title="Chat"></div>
+	    </div>
+	    <div dojoType="dijit.layout.SplitContainer" orientation="vertical">
+	            <div dojoType="dijit.layout.ContentPane" title="Table">
+	            	<div id="message" dojoType="dijit.layout.ContentPane" region="center" role="region" aria-live="assertive" aria-atomic="true" minSize="20"></div>
+	            </div>
+	        <div dojoType="dijit.layout.ContentPane" title="Preview">...</div>
+	    </div>
+	</div>
+  </div>
+	</div>
+	<div dojoType="dijit.Toolbar" layoutAlign="bottom">
+		Seung-jin Kim ... alert/clock etc etc
+	</div>
+	</body>
+	<script type="text/javascript" src="/static/dojo-release-1.5.0/dojo/dojo.js" djConfig="parseOnLoad: true"></script>
+	<script type="text/javascript" src="/faye.js" ></script>
+	<script type="text/javascript" src="/static/dashboard.js"></script>
 </html>

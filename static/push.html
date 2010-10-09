@@ -1,0 +1,29 @@
+<html>
+	
+	
+	<head>
+		<script type="text/javascript" src="/faye.js"> </script>
+		<script type="text/javascript">
+    	var client = new Faye.Client('/faye');
+			//var subscription = client.subscribe('/msg', function(msg) {})
+			var aa = function() {
+				m=document.getElementById("msg").value;
+				client.publish('/msg', {type:"news", text:m});
+				document.getElementById("msg").value = null;
+			};
+		</script>
+	</head>
+	
+	<body>
+		
+		
+		<form id="mg">
+			<input type="text" id="msg" width="600"></input>
+			<input type="button" value="send" onClick="aa();" />
+		</form>
+		
+		
+	</body>
+	
+	
+</html>

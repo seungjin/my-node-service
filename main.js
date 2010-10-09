@@ -5,7 +5,8 @@ var bayeux = new faye.NodeAdapter({
     timeout: 45
 });
 
-var server = require('./lib/node-router/node-router').getServer();
+var node_router = require('./lib/node-router/node-router');
+var server = node_router.getServer();
 
 server.get("/", function(req,res,match) {
 	return "job get";
@@ -19,9 +20,16 @@ server.post("/job", function(req,res,match) {
 	return "hh"
 })
 
+server.get("/dashboard", function(req,res,match) {
+	return node_router.staticHandler('./static/dashboard.html')(req,res);
+})
+
+server.get("/push_test", function(req,res,match) {
+	return node_router.staticHandler('./static/push.html')(req,res);
+})
+
 server.get(new RegExp("^/static(.*)$"), function(req,res,match) {
-	var staticDir = require('./lib/node-router/node-router').staticDirHandler('./','');
-	return staticDir(req,res);
+	return node_router.staticDirHandler('./','')(req,res);
 })
 
 /*
